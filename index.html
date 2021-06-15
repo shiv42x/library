@@ -13,8 +13,27 @@
     </div>
     <div id="book-display">
     </div>
-    <div id="div-new-book">
+    <div id="div-new-btn">
         <button class="button" id=btn-new-book>Add a Book</button>
+    </div>
+    <div id="div-new-book" class="modal">
+        <div class="modal-content">
+            <form id="form-new-book">
+            <span class="close">&times;</span>
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title"><br>
+            <label for="author">Author:</label>
+            <input type="text" id="author" name="Author"><br>
+            <label for="pages">Pages:</label>
+            <input type="number" min="1" id="pages" name="pages"><br>
+            
+            <label for="read-yes">Read</label>
+            <input type="radio" id="read-yes" name="read" value="yes">
+            <label for="read-no">Unread</label>
+            <input type="radio" id="read-no" name="read" value="no"><br>
+            <input type="submit" value="submit">
+            </form>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
