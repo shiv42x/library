@@ -2,6 +2,8 @@ let myLibrary = [];
 const newBookBtn = document.getElementById("btn-new-book");
 const modal = document.getElementById("div-new-book");
 const span = document.getElementsByClassName("close")[0];
+const removeButtons = document.getElementsByClassName("remove-btn");
+console.log(removeButtons);
 
 document.getElementById("form-new-book").onsubmit = function() {
     const title = document.getElementById("title").value;
@@ -13,6 +15,7 @@ document.getElementById("form-new-book").onsubmit = function() {
     }
     const newBook = new Book(title, author, pages, hasRead);
     displayBook(newBook);
+    myLibrary.push(newBook);
     modal.style.display = "none";
     return false;
 }
@@ -32,14 +35,18 @@ window.onclick = function(event) {
 }
 
 /* -- TESTER START -- */
-const theHobbit = new Book("The Hobbit", "J. R. R. Tolkien", 295, true); 
-const theHobbit2 = new Book("The Hobbit2", "J. R. R. Tolkien", 295, true);
+const b1 = new Book("The Hobbit", "J. R. R. Tolkien", 295, true); 
+const b2 = new Book("The Hobbit2", "J. R. R. Tolkien", 295, true);
+const b3 = new Book("The Hobbit2", "J. R. R. Tolkien", 295, true);
+const b4 = new Book("The Hobbit2", "J. R. R. Tolkien", 295, true);
+const b5 = new Book("The Hobbit2", "J. R. R. Tolkien", 295, true);
 
-addBookToLibrary(theHobbit);
-addBookToLibrary(theHobbit2);
-addBookToLibrary(theHobbit2);
-addBookToLibrary(theHobbit2);
-addBookToLibrary(theHobbit2);
+addBookToLibrary(b1);
+addBookToLibrary(b2);
+addBookToLibrary(b3);
+addBookToLibrary(b4);
+addBookToLibrary(b5);
+
 
 myLibrary.forEach(book => displayBook(book));
 /* -- TESTER END -- */
@@ -72,6 +79,7 @@ function displayBook(book) {
     const bookAuthor = document.createElement("p");
     const bookPages = document.createElement("p");
     const hasRead = document.createElement("p");
+    const id = "book-" + myLibrary.indexOf(book).toString(); 
     container.style.textAlign = "center";
 
     // If cnd for whether read or not
@@ -95,6 +103,7 @@ function displayBook(book) {
     container.appendChild(bookAuthor);
     container.appendChild(bookPages);
     container.appendChild(hasRead);
+    container.innerHTML += "<img src=\"delete.png\" class=\"remove-btn\" id=\"" + id + "\"></img>";
     bookCard.appendChild(container);
     display.appendChild(bookCard);
 }
