@@ -33,7 +33,7 @@ window.onclick = function(event) {
     }
 }
 
-/* -- TESTER START -- */
+/* -- TEST CODE
 const b1 = new Book("The Hobbit", "J. R. R. Tolkien", 295, true); 
 const b2 = new Book("The Hobbit2", "J. R. R. Tolkien", 295, true);
 const b3 = new Book("The Hobbit2", "J. R. R. Tolkien", 295, true);
@@ -48,7 +48,7 @@ addBookToLibrary(b5);
 
 
 myLibrary.forEach(book => displayBook(book));
-/* -- TESTER END -- */
+ -- TEST CODE -- */
 
 function Book(title, author, numPages, read) { 
     this.title = title;
@@ -69,11 +69,21 @@ function addBookToLibrary(book) {
     myLibrary.push(book); 
 }
 
+// Toggle whether book object's read value
+function toggleRead(book, hasRead) {
+    if (book.read) {
+        book.read = false;
+    }
+    else {
+        book.read = true; 
+    }
+}
+
+// Remove book object from array
 function deleteBook(id) {
     if (id > -1) {
         myLibrary.splice(id, 1);
     }
-    console.log(myLibrary);
 }
 
 function displayBook(book) {
@@ -86,6 +96,7 @@ function displayBook(book) {
     const bookPages = document.createElement("p");
     const hasRead = document.createElement("p");
     const id = myLibrary.indexOf(book).toString(); 
+    hasRead.id = "read-status-" + id; 
     container.style.textAlign = "center";
 
     // If cnd for whether read or not
@@ -109,15 +120,30 @@ function displayBook(book) {
     container.appendChild(bookAuthor);
     container.appendChild(bookPages);
     container.appendChild(hasRead);
-    //Associate each remove icon to its book object's index in myLibrary
-    container.innerHTML += "<img src=\"delete.png\" class=\"remove-btn\" id=\"img-" + id + "\"></img>";
     bookCard.appendChild(container);
     display.appendChild(bookCard);
 
+
+    //Associate each remove icon to its book object's index in myLibrary
+    container.innerHTML += "<img src=\"delete.png\" class=\"remove-btn\" id=\"img-" + id + "\"></img>";
+    container.innerHTML += "<img src=\"read.png\" id=\"read-btn-" + id + "\"></img>";
+    
+    // Add unread or read buttons and event listeners
+    document.getElementById("read-btn-" + id).addEventListener("click", () => {
+        const readStatus = document.getElementById("read-status-" + id);
+        toggleRead(book);
+        if (book.read) {
+            readStatus.textContent = "You have read this book.";
+        }
+        else {
+            readStatus.textContent = "Unread";
+        }
+    })
+
     // Add event listeners to remove icon and call deleteBook func
-    const img = document.getElementById("img-" + id);
-    img.addEventListener("click", () => {
-        const card = img.parentElement.parentElement;
+    const removeIcon = document.getElementById("img-" + id);
+    removeIcon.addEventListener("click", () => {
+        const card = removeIcon.parentElement.parentElement;
         card.remove();
         deleteBook(parseInt(id));
     })
