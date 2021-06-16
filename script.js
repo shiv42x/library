@@ -125,8 +125,8 @@ function displayBook(book) {
 
 
     //Associate each remove icon to its book object's index in myLibrary
-    container.innerHTML += "<img src=\"delete.png\" class=\"remove-btn\" id=\"img-" + id + "\"></img>";
-    container.innerHTML += "<img src=\"read.png\" id=\"read-btn-" + id + "\"></img>";
+    container.innerHTML += "<img src=\"img/delete.png\" class=\"remove-btn\" id=\"img-" + id + "\"></img>";
+    container.innerHTML += "<img src=\"img/read.png\" id=\"read-btn-" + id + "\"></img>";
     
     // Add unread or read buttons and event listeners
     document.getElementById("read-btn-" + id).addEventListener("click", () => {
