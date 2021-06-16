@@ -2,9 +2,8 @@ let myLibrary = [];
 const newBookBtn = document.getElementById("btn-new-book");
 const modal = document.getElementById("div-new-book");
 const span = document.getElementsByClassName("close")[0];
-const removeButtons = document.getElementsByClassName("remove-btn");
-console.log(removeButtons);
 
+// New book button
 document.getElementById("form-new-book").onsubmit = function() {
     const title = document.getElementById("title").value;
     const author = document.getElementById("author").value;
@@ -14,8 +13,8 @@ document.getElementById("form-new-book").onsubmit = function() {
         hasRead = true;
     }
     const newBook = new Book(title, author, pages, hasRead);
+    myLibrary.push(newBook); // First push so this book object can have a data-index value
     displayBook(newBook);
-    myLibrary.push(newBook);
     modal.style.display = "none";
     return false;
 }
@@ -70,6 +69,13 @@ function addBookToLibrary(book) {
     myLibrary.push(book); 
 }
 
+function deleteBook(id) {
+    if (id > -1) {
+        myLibrary.splice(id, 1);
+    }
+    console.log(myLibrary);
+}
+
 function displayBook(book) {
     // Create HTML for book card
     const display = document.getElementById("book-display");
@@ -79,7 +85,7 @@ function displayBook(book) {
     const bookAuthor = document.createElement("p");
     const bookPages = document.createElement("p");
     const hasRead = document.createElement("p");
-    const id = "book-" + myLibrary.indexOf(book).toString(); 
+    const id = myLibrary.indexOf(book).toString(); 
     container.style.textAlign = "center";
 
     // If cnd for whether read or not
@@ -103,7 +109,16 @@ function displayBook(book) {
     container.appendChild(bookAuthor);
     container.appendChild(bookPages);
     container.appendChild(hasRead);
-    container.innerHTML += "<img src=\"delete.png\" class=\"remove-btn\" id=\"" + id + "\"></img>";
+    //Associate each remove icon to its book object's index in myLibrary
+    container.innerHTML += "<img src=\"delete.png\" class=\"remove-btn\" id=\"img-" + id + "\"></img>";
     bookCard.appendChild(container);
     display.appendChild(bookCard);
+
+    // Add event listeners to remove icon and call deleteBook func
+    const img = document.getElementById("img-" + id);
+    img.addEventListener("click", () => {
+        const card = img.parentElement.parentElement;
+        card.remove();
+        deleteBook(parseInt(id));
+    })
 }
